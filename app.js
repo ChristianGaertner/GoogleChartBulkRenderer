@@ -11,11 +11,10 @@ injectjQuery = function() {
 };
 
 replaceData = function(data) {
+  window.data = data;
   console.log(data);
-  return page.evaluate(function() {
-    window.rawData = data;
-    return drawChart();
-  });
+  window.rawData = data;
+  return drawChart();
 };
 
 page.onLoadFinished = function(status) {

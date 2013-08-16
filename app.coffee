@@ -10,22 +10,27 @@ injectjQuery = ->
   page.evaluate ->
     jQuery.noConflict()
 
+
+
 replaceData = (data) -> 
-	console.log data
-	page.evaluate ->
-		window.rawData = data
-		drawChart()
+    window.data = data
+    console.log data
+    page.evaluate ->
+        window.rawData = data
+        drawChart()
+
+
 
 page.onLoadFinished = (status) ->
-	if status == 'success'
-		injectjQuery()
-		for x in [0..3] by 1
-			replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]])
-			page.render('render/img' + x + '.png')
-		phantom.exit()
-	else
-		console.log('Connection failed.')
-		phantom.exit()
+    if status == 'success'
+        injectjQuery()
+        for x in [0..3] by 1
+            replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]])
+            page.render('render/img' + x + '.png')
+        phantom.exit()
+    else
+        console.log('Connection failed.')
+        phantom.exit()
  
 # console messages send from within page context are ingnored by default
 # this puts them back where they belong.
