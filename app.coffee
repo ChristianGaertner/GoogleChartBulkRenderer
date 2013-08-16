@@ -13,20 +13,19 @@ injectjQuery = ->
 
 
 replaceData = (data) -> 
-    window.data = data
-    console.log data
-    page.evaluate ->
-        window.rawData = data
-        drawChart()
+    page.evaluate (s) ->
+        drawChart(s)
+    , data
+
 
 
 
 page.onLoadFinished = (status) ->
     if status == 'success'
+        x = 1
         injectjQuery()
-        for x in [0..3] by 1
-            replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]])
-            page.render('render/img' + x + '.png')
+        replaceData([['Label', 'Value'], ['Other', x], ['Foo', x], ['Waa', x]])
+        page.render('render/img' + x + '.png')
         phantom.exit()
     else
         console.log('Connection failed.')

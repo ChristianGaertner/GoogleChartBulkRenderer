@@ -1,16 +1,15 @@
 <html>
   <head>
+    <title>
+      Title
+    </title>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type='text/javascript'>
-      window.rawData = [
-          ['Label', 'Value'],
-          ['Memory', 80],
-          ['CPU', 55],
-          ['Network', 68]
-        ];
       google.load('visualization', '1', {packages:['gauge']});
 
-      function drawChart() {
+      function drawChart(rawData) {
+
+        console.log("DEBUG" + rawData);
         var data = google.visualization.arrayToDataTable(rawData);
 
         var options = {
@@ -26,9 +25,10 @@
         var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+
     </script>
   </head>
   <body>
-    <div id='chart_div'></div>
+    <div id='chart_div'>Nothing</div>
   </body>
 </html>

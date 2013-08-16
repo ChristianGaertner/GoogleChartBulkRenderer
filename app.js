@@ -11,20 +11,18 @@ injectjQuery = function() {
 };
 
 replaceData = function(data) {
-  window.data = data;
-  console.log(data);
-  window.rawData = data;
-  return drawChart();
+  return page.evaluate(function(s) {
+    return drawChart(s);
+  }, data);
 };
 
 page.onLoadFinished = function(status) {
-  var x, _i;
+  var x;
   if (status === 'success') {
+    x = 1;
     injectjQuery();
-    for (x = _i = 0; _i <= 3; x = _i += 1) {
-      replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]]);
-      page.render('render/img' + x + '.png');
-    }
+    replaceData([['Label', 'Value'], ['Other', x], ['Foo', x], ['Waa', x]]);
+    page.render('render/img' + x + '.png');
     return phantom.exit();
   } else {
     console.log('Connection failed.');
