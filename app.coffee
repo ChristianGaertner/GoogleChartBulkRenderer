@@ -1,38 +1,56 @@
 page = require('webpage').create()
- 
-injectjQuery = ->
-  # phantom allows to dynamically inject any javascript
-  # into page context.
-  # Make sure you add jquery to your script dir.
-  page.injectJs './jquery.js'
-  
-  # ALWAYS do that when injecting jQuery into other page
-  page.evaluate ->
-    jQuery.noConflict()
 
 
+renderChart = (data) ->
+    for x in [0...data.length] by 1
+        page.evaluate (rawData) ->
+            drawChart(rawData)
+        , data[x]
 
-replaceData = (data) -> 
-    page.evaluate (s) ->
-        drawChart(s)
-    , data
+        if x < 10
+            x = '0' + x
+        
 
-
+        page.render('render/img' + x + '.png')
+        console.log 'Rendered \'img' + x + '.png\''
 
 
 page.onLoadFinished = (status) ->
     if status == 'success'
-        x = 1
-        injectjQuery()
-        replaceData([['Label', 'Value'], ['Other', x], ['Foo', x], ['Waa', x]])
-        page.render('render/img' + x + '.png')
+        data = [
+                 [
+                     ['Label', 'Value'],
+                     ['Foo', 1],
+                     ['Bar', 1],
+                     ['Baz', 1]
+                 ],
+                 [
+                     ['Label', 'Value'],
+                     ['fg', 200],
+                     ['sdfsdg', 51],
+                     ['Badsdgz', 87]
+                 ],
+                 [
+                     ['Label', 'Value'],
+                     ['Fodsfo', 65],
+                     ['Baddr', 45],
+                     ['Badfdsfz', 56]
+                 ],
+                 [
+                     ['Label', 'Value'],
+                     ['Fosdfo', 78],
+                     ['Badsfr', 100],
+                     ['Bdsfz', 54]
+                    ],
+            ]
+        renderChart(data)
         phantom.exit()
+
     else
         console.log('Connection failed.')
         phantom.exit()
  
-# console messages send from within page context are ingnored by default
-# this puts them back where they belong.
+
 page.onConsoleMessage = (msg) ->
   console.log(msg)
  
