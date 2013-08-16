@@ -11,6 +11,7 @@ injectjQuery = function() {
 };
 
 replaceData = function(data) {
+  console.log(data);
   return page.evaluate(function() {
     window.rawData = data;
     return drawChart();
@@ -21,7 +22,7 @@ page.onLoadFinished = function(status) {
   var x, _i;
   if (status === 'success') {
     injectjQuery();
-    for (x = _i = 0; _i <= 100; x = _i += 1) {
+    for (x = _i = 0; _i <= 3; x = _i += 1) {
       replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]]);
       page.render('render/img' + x + '.png');
     }

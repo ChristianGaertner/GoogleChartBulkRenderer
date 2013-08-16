@@ -11,6 +11,7 @@ injectjQuery = ->
     jQuery.noConflict()
 
 replaceData = (data) -> 
+	console.log data
 	page.evaluate ->
 		window.rawData = data
 		drawChart()
@@ -18,13 +19,8 @@ replaceData = (data) ->
 page.onLoadFinished = (status) ->
 	if status == 'success'
 		injectjQuery()
-		for x in [0..100] by 1
-			replaceData([
-				['Label', 'Value'],
-				['Other', x],
-				['Boo', x],
-				['Waa', x]
-			])
+		for x in [0..3] by 1
+			replaceData([['Label', 'Value'], ['Other', x], ['Boo', x], ['Waa', x]])
 			page.render('render/img' + x + '.png')
 		phantom.exit()
 	else
