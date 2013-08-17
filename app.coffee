@@ -1,4 +1,13 @@
 page = require('webpage').create()
+system = require('system')
+
+if system.args.length == 1
+    imgWidth    = 400
+    imgHeight   = 200
+else
+    imgWidth    = system.args[1]
+    imgHeight   = system.args[2]
+
 
 renderChart = (data, id) ->
     page.evaluate (rawData) ->
@@ -29,8 +38,8 @@ page.onConsoleMessage = (msg) ->
 
 
 page.viewportSize = {
-    width: 400,
-    height: 200
+    width: imgWidth,
+    height: imgHeight
 }
 
 page.open('chart-markdown/gauge.html')
