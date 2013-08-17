@@ -2,29 +2,23 @@
   <head>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["gauge"]});
-
+      google.load("visualization", "1", {packages:["corechart"]});
+      
       function drawChart(rawData) {
-
+        
         var data = google.visualization.arrayToDataTable(rawData);
+        
 
         var options = {
-          width: 400,
-          height: 120,
-          redFrom: 90,
-          redTo: 100,
-          yellowFrom:75,
-          yellowTo: 90,
-          minorTicks: 5
+          title: 'Minecraft-Stats'
         };
 
-        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-
     </script>
   </head>
   <body>
-    <div id='chart_div'></div>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
   </body>
 </html>

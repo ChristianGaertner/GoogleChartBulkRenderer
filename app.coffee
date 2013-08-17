@@ -1,12 +1,25 @@
 page = require('webpage').create()
 system = require('system')
 
-if system.args.length == 1
+if system.args.length == 2
+    type = system.args[1]
     imgWidth    = 400
     imgHeight   = 200
 else
-    imgWidth    = system.args[1]
-    imgHeight   = system.args[2]
+    if system.args.length == 4
+        type        = system.args[1]
+        imgWidth    = system.args[2]
+        imgHeight   = system.args[3]
+    else
+        type        = 'gauge'
+
+
+
+console.log '--- Starting Image Generation ---'
+console.log '-+ Chart Type: ' + type
+console.log '-+ Image Width: ' + imgWidth
+console.log '-+ Image Height: ' + imgHeight
+console.log '---------------------------------'
 
 
 renderChart = (data, id) ->
@@ -23,7 +36,7 @@ renderChart = (data, id) ->
 
 page.onLoadFinished = (status) ->
     if status == 'success'
-        data = getDataFor('gauge')
+        data = getDataFor(type)
         for x in [0...data.length] by 1
             renderChart(data[x], x)
         phantom.exit()
@@ -42,19 +55,26 @@ page.viewportSize = {
     height: imgHeight
 }
 
-page.open('chart-markdown/gauge.html')
+page.open('chart-markdown/' + type + '.html')
 
 
 
 
 getDataFor = (type) ->
     if type == 'gauge'
+        console.log 'EX'
         return [
                 [
                     ['Label', 'Value'],
                     ['Foo', 1],
                     ['Bar', 1],
                     ['Baz', 1]
+                ],
+                [
+                    ['Label', 'Value'],
+                    ['Memory', 80],
+                    ['CPU', 55],
+                    ['Network', 68]
                 ],
                 [
                     ['Label', 'Value'],
@@ -75,5 +95,41 @@ getDataFor = (type) ->
                      ['Bdsfz', 54]
                 ],
             ]
-    
-
+    else if type == 'linechart'
+        console.log 'EX1'
+        return [
+                  [
+                    ['Year', 'Players', 'DownTimes'],
+                    ['2004',  1000,      20],
+                    ['2005',  1170,      50],
+                    ['2006',  660,       1],
+                    ['2007',  50,      23]
+                   ],
+                   [
+                    ['Year', 'Players', 'DownTimes'],
+                    ['2004',  1000,      0],
+                    ['2005',  1170,      0],
+                    ['2006',  660,       5],
+                    ['2007',  1030,      0]
+                   ]
+            ]
+    else if type == 'piechart'
+        console.log 'EX2'
+        return [
+                [
+                  ['Task', 'Hours per Day'],
+                  ['Work',     11],
+                  ['Eat',      2],
+                  ['Commute',  2],
+                  ['Watch TV', 2],
+                  ['Sleep',    7]
+                ],
+                [
+                    ['Task', 'Hours per Day'],
+                    ['Work',     0],
+                    ['Eat',      0],
+                    ['Commute',  0],
+                    ['Watch TV', 0],
+                    ['Sleep',    24]
+                ]
+        ]
