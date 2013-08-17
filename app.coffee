@@ -1,24 +1,22 @@
 page = require('webpage').create()
 
+renderChart = (data, id) ->
+    page.evaluate (rawData) ->
+        drawChart(rawData)
+    , data
 
-renderChart = (data) ->
-    for x in [0...data.length] by 1
-        page.evaluate (rawData) ->
-            drawChart(rawData)
-        , data[x]
+    if id < 10
+        id = '0' + id
+    page.render('render/img' + id + '.png')
+    console.log 'Rendered \'img' + id + '.png\''
 
-        if x < 10
-            x = '0' + x
-        
-
-        page.render('render/img' + x + '.png')
-        console.log 'Rendered \'img' + x + '.png\''
 
 
 page.onLoadFinished = (status) ->
     if status == 'success'
         data = getDataFor('gauge')
-        renderChart(data)
+        for x in [0...data.length] by 1
+            renderChart(data[x], x)
         phantom.exit()
 
     else

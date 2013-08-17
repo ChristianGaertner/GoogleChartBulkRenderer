@@ -3,27 +3,24 @@ var getDataFor, page, renderChart;
 
 page = require('webpage').create();
 
-renderChart = function(data) {
-  var x, _i, _ref, _results;
-  _results = [];
-  for (x = _i = 0, _ref = data.length; _i < _ref; x = _i += 1) {
-    page.evaluate(function(rawData) {
-      return drawChart(rawData);
-    }, data[x]);
-    if (x < 10) {
-      x = '0' + x;
-    }
-    page.render('render/img' + x + '.png');
-    _results.push(console.log('Rendered \'img' + x + '.png\''));
+renderChart = function(data, id) {
+  page.evaluate(function(rawData) {
+    return drawChart(rawData);
+  }, data);
+  if (id < 10) {
+    id = '0' + id;
   }
-  return _results;
+  page.render('render/img' + id + '.png');
+  return console.log('Rendered \'img' + id + '.png\'');
 };
 
 page.onLoadFinished = function(status) {
-  var data;
+  var data, x, _i, _ref;
   if (status === 'success') {
     data = getDataFor('gauge');
-    renderChart(data);
+    for (x = _i = 0, _ref = data.length; _i < _ref; x = _i += 1) {
+      renderChart(data[x], x);
+    }
     return phantom.exit();
   } else {
     console.log('Connection failed.');
