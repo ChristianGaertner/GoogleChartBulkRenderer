@@ -1,6 +1,9 @@
 page = require('webpage').create()
 system = require('system')
 
+typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
+
+
 if system.args.length == 2
     type = system.args[1]
     imgWidth    = 400
@@ -59,10 +62,8 @@ page.open('chart-markdown/' + type + '.html')
 
 
 
-
 getDataFor = (type) ->
     if type == 'gauge'
-        console.log 'EX'
         return [
                 [
                     ['Label', 'Value'],
@@ -96,7 +97,6 @@ getDataFor = (type) ->
                 ],
             ]
     else if type == 'linechart'
-        console.log 'EX1'
         return [
                   [
                     ['Year', 'Players', 'DownTimes'],
@@ -114,7 +114,6 @@ getDataFor = (type) ->
                    ]
             ]
     else if type == 'piechart'
-        console.log 'EX2'
         return [
                 [
                   ['Task', 'Hours per Day'],
