@@ -35,6 +35,7 @@ console.log('---------------------------------');
 
 renderChart = function(data, id) {
   page.evaluate(function(rawData) {
+    window.rawData = rawData;
     return drawChart(rawData);
   }, data);
   if (id < 10) {

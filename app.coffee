@@ -27,6 +27,7 @@ console.log '---------------------------------'
 
 renderChart = (data, id) ->
     page.evaluate (rawData) ->
+        window.rawData = rawData
         drawChart(rawData)
     , data
 
