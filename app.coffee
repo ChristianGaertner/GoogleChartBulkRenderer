@@ -34,8 +34,10 @@ data = [
         ],
     ]
 
+type = 'gauge'
+
 for x in [0...data.length] by 1
-	child = exec("phantomjs render.js " + x + , stdout)
+	child = exec("phantomjs render.js " + x + " [data] " + type + " 500 600", stdout)
 
 
 stdout =  (error, stdout, stderr) ->
