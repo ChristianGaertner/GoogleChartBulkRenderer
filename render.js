@@ -38,7 +38,7 @@ page.viewportSize = {
 };
 
 page.onConsoleMessage = function(msg) {
-    return console.log(msg);
+    return console.log('console [' +source +':' +line +']> ' +msg);
 };
 
 page.onLoadFinished = function(status) {
