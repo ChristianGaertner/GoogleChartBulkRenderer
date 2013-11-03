@@ -1,14 +1,24 @@
-var page = require('webpage').create(),
-fs = require('fs');
+/**
+ * Copyright 2013 Christian Gärtner <christiangaertner.film@googlemail.com>
+ * A basic google chart renderer
+ * Run this file using phantomjs
+ * Usage:
+ * phantomjs render.js NAME TYPE WIDTH HEIGHT DATA
+ * Example:
+ * phantomjs render.js diagramm01 linechart 500 500, [['some, data'], ['some', 'data']]
+ */
 
-var type = 'piechart',
-imgWidth = 400,
-imgHeight = 200,
-name = 'piechart',
-// data = [['Label', 'Value'], ['Foo', 2], ['Bar', 1], ['Baz', 1]] // gauge
-data = [['Year', 'Players', 'DownTimes'], ['2004', 1000, 20], ['2005', 1170, 50], ['2006', 660, 1], ['2007', 50, 23]] // linechart
-data = [['Task', 'Hours per Day'], ['Work', 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2], ['Sleep', 7]] // piechart
-;
+// Imports
+var page = require('webpage').create(),
+fs = require('fs'),
+system = require('system');
+
+// Image specifications
+var type = system.args[2],
+imgWidth = system.args[3],
+imgHeight = system.args[4],
+name = system.args[1],
+data = JSON.parse(system.args[5]);
 
 console.log('--- Starting Image Generation ---');
 console.log('-+ Chart Type: ' + type);
