@@ -1,9 +1,7 @@
 {
   "name": "ChartImageGeneration",
   "version": "0.1.0",
-  "gitHead": "f626c266c1aff8f6dd291405a6f22771930bbe13",
-  "description": "Frontend",
-  "main": "Gruntfile.js",
+  "description": "Render GoogleCharts",
   "dependencies": {
     "async": "0.1"
   },
