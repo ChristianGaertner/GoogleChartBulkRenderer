@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Render GoogleCharts",
   "dependencies": {
-    "async": "0.1"
+    "async": "0.1",
+    "q": "0.9"
   },
   "author": "Christian Gaertner",
   "license": "MIT"
